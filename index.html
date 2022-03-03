@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8" />
+<title>React.js</title>
+<script src="https://unpkg.com/react/umd/react.development.js"></script>
+<script src="https://unpkg.com/react-dom/umd/react-dom.development.js"></script>
+<script src="https://unpkg.com/babel-standalone/babel.js"></script>
+<style type="text/css">
+  #calculator {
+      background: #eaeaea;
+      margin: 0 auto;
+      padding: 35px 25px 35px 25px;
+      width: 200px;
+      text-align: center;
+  }
+  #calculator button {
+      padding: 10px;
+      width: 40px;
+  }
+  #calculator input[type="text"] {
+      padding: 10px;
+      width: 147px;
+      margin-bottom: 5px;
+  }
+  </style>
+</head>
+<body>
+  
+<div id="calculator"></div>
+
+<script type="text/babel">
+class Calculator extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = { 
+      a: '', 
+      b: '',
+      result: 'wynik = ' 
+    };
+    this.handleChangeA = this.handleChangeA.bind(this);
+    this.handleChangeB = this.handleChangeB.bind(this);
+    this.handleCalculate = this.handleCalculate.bind(this);
+  }
+
+  render() {
+    return (
+      <div>
+        <form>
+          <input type="text" onChange={this.handleChangeA} value={this.state.a} placeholder="a"/>
+          <input type="text" onChange={this.handleChangeB} value={this.state.b} placeholder="b"/>
+          <input type="text" value={this.state.result} placeholder="result" disabled="disabled" />
+          <button type="button" onClick={this.handleCalculate}>+</button>
+          <button type="button" onClick={this.handleCalculate}>-</button>
+          <button type="button" onClick={this.handleCalculate}>x</button>
+          <button type="button" onClick={this.handleCalculate}>/</button>
+        </form>
+      </div>
+    );
+  }
+
+  handleChangeA(e) {
+    this.setState({ a: e.target.value });
+  }
+
+  handleChangeB(e) {
+    this.setState({ b: e.target.value });
+  }
+
+  handleCalculate(e) 
+  {
+    e.preventDefault();
+
+    switch(e.target.innerText) 
+    {
+        case '+':
+          var result = parseFloat(this.state.a) + parseFloat(this.state.b);         
+        break;
+        case '-':
+          var result = parseFloat(this.state.a) - parseFloat(this.state.b);         
+        break;  
+        case 'x':
+          var result = parseFloat(this.state.a) * parseFloat(this.state.b);         
+        break;  
+        case '/':
+          var result = parseFloat(this.state.a) / parseFloat(this.state.b);         
+        break;    
+    }
+
+    this.setState({ result: 'result = ' + result });
+  }
+
+}
+
+ReactDOM.render(<Calculator />, document.getElementById('calculator'));
+</script>
+
+</body>
+</html>
